@@ -46,7 +46,7 @@ func Upload(req *http.Request) (string ,error){
 		log.Println(err)
 		return "" ,err
 	}
-	return fmt.Sprintf("User->%s ,fileId->%s ,to get this file ,use 'GET static.shinoha.cn/$User/$fileId'" ,userId ,fileSaveId) ,nil
+	return fmt.Sprintf("Upload successfully ,User - %s ,fileId - %s ,to get this file ,use 'GET static.shinoha.cn/%s/%s'" ,userId ,fileSaveId ,userId ,fileSaveId) ,nil
 }
 
 
