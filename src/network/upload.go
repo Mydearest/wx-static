@@ -23,9 +23,6 @@ func getRootPath() string{
 
 // POST	/		params:user_id token_id file
 func Upload(req *http.Request) (string ,error){
-	if err := req.ParseMultipartForm(MaxUploadSize);err != nil{
-		return "" ,err
-	}
 	params := req.MultipartForm.Value
 	userId := params[UserId][0]
 	fileEntry := req.MultipartForm.File["file"][0]
@@ -38,7 +35,9 @@ func Upload(req *http.Request) (string ,error){
 	filename := fileEntry.Filename
 	fileSaveId := getFileId(filename)
 
-	os.Mkdir(getSaveDir(userId), 0755)
+	if err := os.Mkdir(getSaveDir(userId), 0755);err != nil{
+		return "" ,err
+	}
 	saveFile ,err := os.OpenFile(getSaveDir(userId)+"/"+fileSaveId, os.O_WRONLY|os.O_CREATE, 0755)
 	defer saveFile.Close()
 
