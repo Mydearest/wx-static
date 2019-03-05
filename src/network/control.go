@@ -34,22 +34,28 @@ func dispatcher(mux *http.ServeMux){
 }
 
 func writeRefused(writer http.ResponseWriter ,msg string ,req *http.Request){
-	writer.WriteHeader(403)
 	writeRes(writer ,Refused ,msg ,req)
 }
 
 func writeOk(writer http.ResponseWriter ,msg string ,req *http.Request){
-	writer.WriteHeader(200)
 	writeRes(writer ,Success ,msg ,req)
 }
 
 func writeErr(writer http.ResponseWriter ,msg string ,req *http.Request){
-	writer.WriteHeader(400)
 	writeRes(writer ,Error ,msg ,req)
 }
 
 func writeRes(writer http.ResponseWriter ,result Result ,msg string ,req *http.Request){
-	writer.Header().Set("Content-type" ,"application/json; charset=UTF-8")
+	writer.Header().Set("Content-Type" ,"application/json; charset=utf-8")
+	switch result {
+	case Refused:
+		writer.WriteHeader(403)
+	case Error:
+		writer.WriteHeader(400)
+	default:
+		writer.WriteHeader(200)
+	}
+
 	res := &Response{
 		Result:result,
 		Message:msg,

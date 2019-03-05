@@ -1,7 +1,20 @@
 package main
 
-import "network"
+import (
+	"config"
+	"log"
+	"network"
+)
+
+func init(){
+	log.SetFlags(log.Llongfile)
+}
 
 func main(){
-	network.StartServer()
+	cmd := config.ParseCmd()
+	if cmd.Help{
+		config.Help()
+	}else {
+		network.StartServer()
+	}
 }

@@ -7,6 +7,7 @@ import (
 )
 
 func StartHandle(writer http.ResponseWriter, req *http.Request){
+
 	if err := checkMethod(req);err != nil{
 		writeRefused(writer ,err.Error() ,req)
 		return
